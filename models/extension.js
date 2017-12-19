@@ -8,8 +8,6 @@ const ExtensionSchema = new Schema({
     monetaizusID:   {type: String, unique: true},
     user:           {type: String}, // who created
     status:         {type:Number}, // status 
-    url:            [ {url:String, count: Number} ], // list of visited resources ~replaced~
-    lang:           {type:String}, // user language
     created:        {type: Date, default: Date.now}, //date of creation
     owner:          {
         type:       Schema.Types.ObjectId, 

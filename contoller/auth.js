@@ -40,14 +40,6 @@ module.exports = {
         } catch (e) {
             next(e);
         }
-    },
-
-    userLogout: async (req, res, next) => {
-        try {
-            
-        } catch (e) {
-            next(e);
-        }
     }
 
 }

@@ -2,7 +2,7 @@ const config = {
     ip: 'http://localhost',
     port: 9001,
     mongo: {
-        'ip':'mongodb://localhost',
+        'ip':'mongodb://root:Fyfkmuby51-!5-$7@localhost',
         port: 27019,
         dbname: 'serverdb'
     },
