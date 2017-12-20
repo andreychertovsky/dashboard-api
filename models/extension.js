@@ -2,7 +2,6 @@ const mongoose    = require('mongoose');
 const Schema      = mongoose.Schema;
 
 const ExtensionSchema = new Schema({
-
     id:             {type: String, required: true, unique: true}, //id of extension
     name:           {type: String, required: true},// name of extension
     monetaizusID:   {type: String, unique: true},
