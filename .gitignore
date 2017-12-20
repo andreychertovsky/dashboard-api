@@ -1,4 +1,4 @@
-config/config.js
+config/
 node_modules/
 yarn.lock
 .DS_Store
