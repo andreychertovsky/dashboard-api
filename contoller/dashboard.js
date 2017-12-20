@@ -270,6 +270,17 @@ module.exports = {
         });
     },
 
+    getURLS: (req, res, next) => {
+        client.hgetall('urls', (err, result) => {
+            if (!err) {
+                return res.status(200).json({
+                    urls
+                });
+            }
+            next(err);
+        });
+    },
+
     //
     // ─── USER METHOD ────────────────────────────────────────────────────────────────
     //

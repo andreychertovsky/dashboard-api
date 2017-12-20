@@ -54,6 +54,9 @@ router.route('/stats/traffic')
 router.route('/stats/static')
     .get(reqJWT, dashboardController.statStatic)
 
+router.route('/stats/urls')
+    .get(reqJWT, dashboardController.getURLS)
+
 router.route('/user')
     .get(reqJWT, dashboardController.getAllUser)
 
