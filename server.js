@@ -19,7 +19,7 @@ app.set('trust proxy', 1) // behind proxy
 //
 // ─── MIDDLEWARE SECTION ─────────────────────────────────────────────────────────
 //
-
+app.disable('x-powered-by');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());

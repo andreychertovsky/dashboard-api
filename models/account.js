@@ -5,6 +5,7 @@ const AccountSchema =  new Schema({
     login:          {type: String, required: true, unique: true}, // account login
     password:       {type: String, required: true}, // account password
     domen:          {type: String},
+    gWeb:           {type: String},
     extList:        [{
         type:       Schema.Types.ObjectId, 
         ref:        'Extension'
