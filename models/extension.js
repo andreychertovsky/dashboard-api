@@ -5,7 +5,7 @@ const ExtensionSchema = new Schema({
     id:             {type: String, required: true, unique: true}, //id of extension
     name:           {type: String, required: true},// name of extension
     monetaizusID:   {type: String, unique: true, required: true},
-    monetaizusType: {type: String, required: true},
+    monetaizusUrl:  {type: String, required: true},
     user:           {type: String}, // who created
     status:         {type:Number}, // status 
     created:        {type: Date, default: Date.now}, //date of creation
