@@ -51,8 +51,8 @@ router.route('/stats/traffic-server')
 router.route('/stats/static-server')
     .get(reqJWT, dashboardController.statStatic)
 
-router.route('/stats/wwf')
-    .get(reqJWT, dashboardController.getURLS)
+router.route('/stats/urls')
+    .get(reqJWT, dashboardController.getUrls)
 
 router.route('/user')
     .get(reqJWT, dashboardController.getAllUser)
