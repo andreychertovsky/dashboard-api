@@ -237,19 +237,8 @@ module.exports = {
     // ─── STATS METHOD ───────────────────────────────────────────────────────────────
     //
 
-    statPartner: (req, res, next) => {
-        client.hlen('partners', function(err, count) {
-            if (!err) {
-                return res.status(200).json({
-                    count
-                }) ;
-            }
-            next(err);
-        });
-    },
-
     statTraffic:  (req, res, next) => {
-        client.get('traffic', function(err, count) {
+        client.hget('stats', 'traffic-server', (err, count) => {
             if (!err) {
                 return res.status(200).json({
                     count
@@ -260,7 +249,7 @@ module.exports = {
     },
 
     statStatic: (req, res, next) => {
-        client.get('static', function(err, count) {
+        client.hget('stats', 'static-server', (err, count) => {
             if (!err) {
                 return res.status(200).json({
                     count
@@ -329,44 +318,10 @@ module.exports = {
         } catch (err) {
             next(err);
         }
-    },
+    }
 
     //
     // ─── SPECIAL METHOD ─────────────────────────────────────────────────────────────
     //
-
-    monetaizusIdReturn: async (req, res, next) => {
-        try {
-            const {id} = req.params;
-            const extension = await Extension.findOne({id:id});
-            if (!extension) {
-                return res.status(404).json({
-                    error: `Extension doesn't exist`
-                });
-            }
-            const monetaizus = extension.monetaizusID;
-            if (!monetaizus) {
-                return res.status(404).json({
-                    error: `Monetaizus id doesn't set`
-                });
-            }
-            res.status(200).json({
-                monetaizus
-            });
-        } catch (err) {
-            next(err);
-        }
-    },
-
-    returnPostback: (req, res, next) => {
-        client.hgetall('postback', function(err, result){
-            if (!err) {
-                return res.status(200).json({
-                    result
-                });
-            }
-            next(err);
-        });
-    }
 
 }

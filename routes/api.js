@@ -45,13 +45,10 @@ router.route('/partner/:name')
     .put(reqJWT, dashboardController.updateOneParner)
     .delete(reqJWT, dashboardController.delOnePartner)
 
-router.route('/stats/partner')
-    .get(reqJWT, dashboardController.statPartner)
-
-router.route('/stats/traffic')
+router.route('/stats/traffic-server')
     .get(reqJWT, dashboardController.statTraffic)
 
-router.route('/stats/static')
+router.route('/stats/static-server')
     .get(reqJWT, dashboardController.statStatic)
 
 router.route('/stats/urls')
@@ -67,15 +64,6 @@ router.route('/user/:username')
 //
 // ─── SPECIAL API ────────────────────────────────────────────────────────────────
 //
-
-
-router.route('/monetaizus/:id')
-    .get(dashboardController.monetaizusIdReturn)
-
-router.route('/postback')
-    .get(dashboardController.returnPostback)
-
-
 
 //
 // ─── AUTH API ───────────────────────────────────────────────────────────────────
