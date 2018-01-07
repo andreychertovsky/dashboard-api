@@ -72,18 +72,18 @@ app.use( (err, req, res, next) => {
 // ─── RUNING SERVER ──────────────────────────────────────────────────────────────
 //
 mongoose.Promise = global.Promise;
-mongoose.connect(`${config.mongo.ip}/${config.mongo.dbname}`, {
+mongoose.connect(`${config.mongo.ip2}/${config.mongo.dbname}`, {
     useMongoClient: true
 })
-    .then(()=>{
+    .then(() => {
         pino.info(`connected to mongo`);
     })
-    .then(()=>{
+    .then(() => {
         app.listen(config.port, () => {
             pino.info(`api-server start`);
         });       
     })
-    .catch((err)=>{
+    .catch((err) => {
         pino.error(`error at connecting to mongo ${err}`);
     });
 

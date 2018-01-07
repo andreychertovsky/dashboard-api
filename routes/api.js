@@ -1,7 +1,7 @@
-const express           = require('express');
-const router            = express.Router();
-const passport          = require('passport');
-const passportConfig    = require('../config/passport');
+const express               = require('express');
+const router                = express.Router();
+const passport              = require('passport');
+const passportConfig        = require('../config/passport');
 
 const dashboardController   = require('../contoller/dashboard');
 const authController        = require('../contoller/auth');
@@ -53,6 +53,12 @@ router.route('/stats/static-server')
 
 router.route('/stats/urls')
     .get(reqJWT, dashboardController.getUrls)
+
+router.route('/stats/pb-integration')
+    .get(reqJWT, dashboardController.getPbIntegration)
+
+router.route('/stats/pb-integration/:name')
+    .get(reqJWT, dashboardController.getOnePbIntegration)
 
 router.route('/user')
     .get(reqJWT, dashboardController.getAllUser)

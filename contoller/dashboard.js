@@ -4,7 +4,11 @@ const User      = require('../models/user');
 
 const Promise   = require('bluebird');
 const config    = require('../config/config');
-const client    = Promise.promisifyAll(require('redis').createClient({host:config.redis.host , port:config.redis.port}));
+const redis     = require('redis');
+
+Promise.promisifyAll(redis.RedisClient.prototype);
+
+const client    = redis.createClient({ host:config.redis.host , port:config.redis.port });
 
 module.exports = {
 //
@@ -173,46 +177,46 @@ module.exports = {
     // ─── PARTNER METHOD ─────────────────────────────────────────────────────────────
     //
 
-    getAllPartner:  (req, res, next) => {
-        client.hgetall('partners', function(err, result){
-            if (!err) {
-                return res.status(200).json({
-                    result
-                });
-            }
+    getAllPartner:  async (req, res, next) => {
+        try {
+            const result = await client.hgetallAsync('partners');
+            res.status(200).json({
+                result
+            });
+        } catch ( err ) {
             next(err);
-        });
+        }
     },
 
     createOneParner: async (req, res, next) => {
         try {
             const {name, postback} = req.body;
-            const partner = await client.hset('partners', name, postback);
+            const partner = await client.hsetAsync('partners', name, postback);
             res.status(200).json({
                 success: true
             }) ;
         } catch (err) {
-            next(err)
+            next(err);
         }
     },
 
-    getOnePartner:  (req, res, next) => {
-        const {name} = req.params;
-        client.hget('partners', name ,function(err, result){
-            if (!err) {
-                return  res.status(200).json({
-                    result
-                });
-            }
-            next(err)
-        });
+    getOnePartner:  async (req, res, next) => {
+        try {
+            const {name} = req.params;
+            const result = await client.hgetAsync('partners', name);
+            return  res.status(200).json({
+                result
+            });
+        } catch ( err ) {
+            next(err);
+        }
     },
 
     updateOneParner: async (req, res, next) => {
         try {
             const {name} = req.params;
             const {postback} = req.body;
-            const partner = await client.hset('partners', name, postback);
+            const partner = await client.hsetAsync('partners', name, postback);
             res.status(200).json({
                 success: true
             }) ;
@@ -221,53 +225,76 @@ module.exports = {
         }
     },
 
-    delOnePartner:  (req, res, next) => {
-        const {name} = req.params;
-        client.hdel('partners', name, (err, result) => {
-            if (!err) {
-                return  res.status(200).json({
-                    result
-                });
-            }
+    delOnePartner:  async (req, res, next) => {
+        try {
+            const {name} = req.params;
+            await client.hdelAsync('partners', name);
+            return  res.status(200).json({
+                success: true
+            });
+        } catch ( err ) {
             next(err);
-        });
+        }
     },
 
     //
     // ─── STATS METHOD ───────────────────────────────────────────────────────────────
     //
 
-    statTraffic:  (req, res, next) => {
-        client.hget('stats', 'traffic-server', (err, count) => {
-            if (!err) {
-                return res.status(200).json({
-                    count
-                }) ;
-            }
+    statTraffic:  async (req, res, next) => {
+        try {
+            const result = await client.hgetAsync('stats', 'traffic-server');
+            return res.status(200).json({
+                result
+            }) ;
+        } catch ( err ) {
             next(err);
-        });
+        }
     },
 
-    statStatic: (req, res, next) => {
-        client.hget('stats', 'static-server', (err, count) => {
-            if (!err) {
-                return res.status(200).json({
-                    count
-                }) ;
-            }
+    statStatic: async (req, res, next) => {
+        try {
+            const result = await client.hgetAsync('stats', 'static-server');
+            return res.status(200).json({
+                result
+            }) ;
+        } catch ( err ) {
             next(err);
-        });
+        }
     },
 
-    getUrls: (req, res, next) => {
-        client.hgetall('urls', (err, urls) => {
-            if (!err) {
-                return res.status(200).json({
-                    urls
-                });
-            }
+    getUrls: async (req, res, next) => {
+        try {
+            const result = await client.hgetallAsync('urls');
+            return res.status(200).json({
+                result
+            });
+        } catch ( err ) {
             next(err);
-        });
+        }
+    },
+
+    getPbIntegration: async (req, res, next) => {
+        try {
+            const result = await client.keysAsync('postback-integration:*');
+            return res.status(200).json({
+                result
+            });
+        } catch ( err ) {
+            next(err);
+        }
+    },
+
+    getOnePbIntegration: async (req, res, next) => {
+        try {
+            const {name} = req.params;
+            const result = await client.hgetallAsync(name);
+            return res.status(200).json({
+                result
+            });
+        } catch ( err ) {
+            next(err);
+        }
     },
 
     //
