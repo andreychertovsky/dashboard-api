@@ -72,7 +72,7 @@ app.use( (err, req, res, next) => {
 // ─── RUNING SERVER ──────────────────────────────────────────────────────────────
 //
 mongoose.Promise = global.Promise;
-mongoose.connect(`${config.mongo.ip2}/${config.mongo.dbname}`, {
+mongoose.connect(`${config.mongo.ip}/${config.mongo.dbname}`, {
     useMongoClient: true
 })
     .then(() => {
