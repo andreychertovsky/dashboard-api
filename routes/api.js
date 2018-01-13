@@ -59,6 +59,7 @@ router.route('/stats/pb-integration')
 
 router.route('/stats/pb-integration/:name')
     .get(reqJWT, dashboardController.getOnePbIntegration)
+    .delete(reqJWT, dashboardController.delOnePbIntegration)
 
 router.route('/user')
     .get(reqJWT, dashboardController.getAllUser)

@@ -274,6 +274,11 @@ module.exports = {
         }
     },
 
+    //
+    // ─── POSTBACK INTEGRATION METHODS ───────────────────────────────────────────────
+    //
+
+        
     getPbIntegration: async (req, res, next) => {
         try {
             const result = await client.keysAsync('postback-integration:*');
@@ -291,6 +296,18 @@ module.exports = {
             const result = await client.hgetallAsync(name);
             return res.status(200).json({
                 result
+            });
+        } catch ( err ) {
+            next(err);
+        }
+    },
+
+    delOnePbIntegration: async (req, res, next) => {
+        try {
+            const {name} = req.params;
+            await client.delAsync(`postback-integration:${name}`);
+            return res.status(200).json({
+                success: true
             });
         } catch ( err ) {
             next(err);
