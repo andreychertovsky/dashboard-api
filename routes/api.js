@@ -72,7 +72,7 @@ router.route('/user/:username')
 //
 // ─── SPECIAL API ────────────────────────────────────────────────────────────────
 //
-router.route('test')
+router.route('/test')
     .get(dashboardController.test)
 //
 // ─── AUTH API ───────────────────────────────────────────────────────────────────
