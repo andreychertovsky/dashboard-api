@@ -279,7 +279,7 @@ module.exports = {
     //
 
         
-    getPbIntegration: async (req, res, next) => {
+    getAllPostback: async (req, res, next) => {
         try {
             const result = await client.keysAsync('postback-integration:*');
             return res.status(200).json({
@@ -290,7 +290,7 @@ module.exports = {
         }
     },
 
-    getOnePbIntegration: async (req, res, next) => {
+    getOnePostback: async (req, res, next) => {
         try {
             const {name} = req.params;
             const result = await client.hgetallAsync(name);
@@ -302,10 +302,22 @@ module.exports = {
         }
     },
 
-    delOnePbIntegration: async (req, res, next) => {
+    markOnePostback: async (req, res, next) => {
         try {
             const {name} = req.params;
-            await client.delAsync(`postback-integration:${name}`);
+            await client.hsetAsync(name, 'send', 'true');
+            return res.status(200).json({
+                success: true
+            });
+        } catch ( err ) {
+            next(err)
+        }
+    },
+
+    delOnePostback: async (req, res, next) => {
+        try {
+            const {name} = req.params;
+            await client.delAsync(`${name}`);
             return res.status(200).json({
                 success: true
             });
@@ -362,10 +374,20 @@ module.exports = {
         } catch (err) {
             next(err);
         }
-    }
+    },
 
     //
     // ─── SPECIAL METHOD ─────────────────────────────────────────────────────────────
     //
+
+    test: async (req, res, next) => {
+        try {
+            res.status(200).json({
+                success: true
+            });
+        } catch ( err ) {
+            next(err);
+        }
+    }
 
 }

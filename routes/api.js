@@ -54,12 +54,13 @@ router.route('/stats/static-server')
 router.route('/stats/urls')
     .get(reqJWT, dashboardController.getUrls)
 
-router.route('/stats/pb-integration')
-    .get(reqJWT, dashboardController.getPbIntegration)
+router.route('/postback')
+    .get(reqJWT, dashboardController.getAllPostback)
 
-router.route('/stats/pb-integration/:name')
-    .get(reqJWT, dashboardController.getOnePbIntegration)
-    .delete(reqJWT, dashboardController.delOnePbIntegration)
+router.route('/postback/:name')
+    .get(reqJWT, dashboardController.getOnePostback)
+    .put(reqJWT, dashboardController.markOnePostback)
+    .delete(reqJWT, dashboardController.delOnePostback)
 
 router.route('/user')
     .get(reqJWT, dashboardController.getAllUser)
@@ -71,7 +72,8 @@ router.route('/user/:username')
 //
 // ─── SPECIAL API ────────────────────────────────────────────────────────────────
 //
-
+router.route('test')
+    .get(dashboardController.test)
 //
 // ─── AUTH API ───────────────────────────────────────────────────────────────────
 //
