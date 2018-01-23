@@ -83,7 +83,7 @@ router.route('/login')
     .post(reqLocal, authController.userLogin)
 
 router.route('/register')
-    .post(authController.userRegister) // disable this later
+    .post(authController.userRegister) // disable this 
 
   
 module.exports = router;
