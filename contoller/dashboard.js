@@ -241,7 +241,7 @@ module.exports = {
     // ─── STATS METHOD ───────────────────────────────────────────────────────────────
     //
 
-    statTraffic:  async (req, res, next) => {
+    statTrafficServer:  async (req, res, next) => {
         try {
             const result = await client.hgetAsync('stats', 'traffic-server');
             return res.status(200).json({
@@ -252,7 +252,7 @@ module.exports = {
         }
     },
 
-    statStatic: async (req, res, next) => {
+    statStaticServer: async (req, res, next) => {
         try {
             const result = await client.hgetAsync('stats', 'static-server');
             return res.status(200).json({
@@ -265,9 +265,43 @@ module.exports = {
 
     getUrls: async (req, res, next) => {
         try {
-            const result = await client.hgetallAsync('urls');
+            return res.status(200).json({
+                message:'use python script instead'
+            });
+        } catch ( err ) {
+            next(err);
+        }
+    },
+
+    getAllPartnersStat: async (req, res, next) => {
+        try {
+            const result = await client.keysAsync('partner-integration:*');
             return res.status(200).json({
                 result
+            });
+        } catch ( err ) {
+            next(err);
+        }
+    },
+
+    getOnePartnersStat: async (req, res, next) => {
+        try {
+            const {name} = req.params;
+            const result = await client.hgetallAsync(name);
+            return res.status(200).json({
+                result
+            });
+        } catch ( err ) {
+            next(err);
+        }
+    },
+
+    deleteOnePartnersStat: async (req, res, next) => {
+        try {
+            const {name} = req.params;
+            await client.hdelAsync(name);
+            return res.status(200).json({
+                success: true
             });
         } catch ( err ) {
             next(err);
@@ -281,9 +315,8 @@ module.exports = {
         
     getAllPostback: async (req, res, next) => {
         try {
-            const result = await client.keysAsync('postback-integration:*');
             return res.status(200).json({
-                result
+                message:'use python script instead'
             });
         } catch ( err ) {
             next(err);
@@ -299,18 +332,6 @@ module.exports = {
             });
         } catch ( err ) {
             next(err);
-        }
-    },
-
-    markOnePostback: async (req, res, next) => {
-        try {
-            const {name} = req.params;
-            await client.hsetAsync(name, 'send', 'true');
-            return res.status(200).json({
-                success: true
-            });
-        } catch ( err ) {
-            next(err)
         }
     },
 

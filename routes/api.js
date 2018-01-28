@@ -46,20 +46,26 @@ router.route('/partner/:name')
     .delete(reqJWT, dashboardController.delOnePartner)
 
 router.route('/stats/traffic-server')
-    .get(reqJWT, dashboardController.statTraffic)
+    .get(reqJWT, dashboardController.statTrafficServer)
 
 router.route('/stats/static-server')
-    .get(reqJWT, dashboardController.statStatic)
+    .get(reqJWT, dashboardController.statStaticServer)
 
 router.route('/stats/urls')
     .get(reqJWT, dashboardController.getUrls)
+
+router.route('/stats/partner')
+    .get(reqJWT, dashboardController.getAllPartnersStat)
+
+router.route('/stats/partner/:name')
+    .get(reqJWT, dashboardController.getOnePartnersStat)
+    .delete(reqJWT, dashboardController.deleteOnePartnersStat)
 
 router.route('/postback')
     .get(reqJWT, dashboardController.getAllPostback)
 
 router.route('/postback/:name')
     .get(reqJWT, dashboardController.getOnePostback)
-    .put(reqJWT, dashboardController.markOnePostback)
     .delete(reqJWT, dashboardController.delOnePostback)
 
 router.route('/user')
